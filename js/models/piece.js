@@ -15,7 +15,38 @@ define(function (require) {
 		},
 		hasOpponentPiece: function(col, row) {
 			if (this.isEmpty(col,row)) return false;
-			return board.getPieceForPosition(col, row).get('player') !== this.get('player');
+			var piece = board.getPieceForPosition(col, row);
+			return piece && piece.get('player') !== this.get('player');
+		},
+		outOfBounds: function(col, row, offset) {
+			var offset = offset ? offset : 0;
+			if (col + offset < 0 
+			 	 || col + offset > 7
+				 || row + offset < 0 
+				 || row + offset > 7
+				 || col - offset < 0 
+			 	 || col - offset > 7
+				 || row - offset < 0 
+				 || row - offset > 7
+			) {
+				return true;
+			}	
+
+			return false;
+		},
+		move: function(col, row) {
+			var validMoves = this.getValidMoves();
+			var path = board.path(col, row);
+			if (!_.contains(validMoves, path)) {
+				throw 'User tried to perform illegal move!';
+			}
+
+			board.setPosition(col, row, this);
+			board.setPosition(this.get('column'), this.get('row'), undefined);
+			this.set({
+				col: col,
+				row: row
+			});
 		}
 
 		

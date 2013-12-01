@@ -4,34 +4,27 @@ define(function (require) {
 	var Backbone = require('backbone'); 
     var Mustache = require('libs/mustache/mustache');
 
+    var pieceNames = 'rook horse bishop queen king pawn';
+    var pieceNamesSelector = '.rook, .horse, .bishop, .queen, .king, .pawn';
+
     return function() {
 
 	    var board = require('models/board');
-	    var Queen = require('models/queen');
-	    var Pawn = require('models/pawn');
-
-	    board.setUp([[undefined, undefined, undefined, new Queen({player: 2}), undefined, undefined, undefined, undefined],
-					 [new Pawn({player: 2, column: 0, row: 1}), new Pawn({player: 2, column: 1, row: 1}), new Pawn({player: 2, column: 2, row: 1}), 
-					 new Pawn({player: 2, column: 3, row: 1}), new Pawn({player: 2, column: 4, row: 1}), new Pawn({player: 2, column: 5, row: 1}), 
-					 new Pawn({player: 2, column: 6, row: 1}), new Pawn({player: 2, column: 7, row: 1})],
-		 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-		 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-		 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-		 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-		 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-		 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]])
+		var Setup = require('models/setup');
+	    board.setUp(Setup.DEFAULT);
 
 		render();
 
 		function render() {
-			$('.rook, .horse, .bishop, .queen, .king, .pawn').removeClass('rook horse bishop queen king pawn');
+			$(pieceNamesSelector).removeClass(pieceNames);
+			$('.player-1, .player-2').removeClass('player-1 player-2');
 			for (var row=0 ; row < 8 ; row++) {
 				for (var col=0 ; col < 8 ; col++) {
 					var piece = board.getPieceForPosition(col, row);
-					if (piece) $('.row-' + row + '.col-'+col).addClass(piece.get('name'));
+					if (piece) $('.row-' + row + '.col-'+col).addClass(piece.get('name')).addClass('player-' + piece.get('player'));
 				}	
 			}
-		}		
+		}
 
 		function getCellForPath(path) {
 			var position = board.path(path);
@@ -58,27 +51,43 @@ define(function (require) {
 		}
 
 	    function clickHandler(e) {
-			var $cell = $(e.currentTarget);
+			var $clickedCell = $(e.currentTarget);
+			var clickedPosition = getPosition($clickedCell);
+			var piece = board.getPieceForPosition(clickedPosition.col, clickedPosition.row);
 
-			var position = getPosition($cell);
-			var piece = board.getPieceForPosition(position.col, position.row);
-			var moves = piece.getValidMoves(board);
-			console.log(moves);
+			if ($clickedCell.hasClass('selected')) {
+				clearState();
+			}
+			else if ($clickedCell.hasClass('validMove')) {
+				var $oldCell = $('.selected');
+				var oldPosition = getPosition($oldCell);
+				var piece = board.getPieceForPosition(oldPosition.col, oldPosition.row);
+				piece.move(clickedPosition.col, clickedPosition.row);
+				render();
+				$clickedCell.addClass('player-' + piece.get('player') + ' ' + piece.get('name'))
+				clearState();
 
-			if ($cell.hasClass('validMove')) {
-				$('.validMove').removeClass('validMove');
-			} else {
-				$('.validMove').removeClass('validMove');	
-				$cell.addClass('validMove');
+			}
+			else if (piece) {
+				clearState();
+				var moves = piece.getValidMoves(board);
+				$clickedCell.addClass('selected');
 				_.each(moves, function(path) {
 					var $validMoveCell = getCellForPath(path);
 					$validMoveCell.addClass('validMove');
 				});
 			}
+
+			function clearState() {
+				$('.validMove, .selected').removeClass('validMove selected');
+			}
 		}
 
 		$('td').click(clickHandler);
 
+		$('button').click(function() {
+			board.log();
+		});
 
     };
 });

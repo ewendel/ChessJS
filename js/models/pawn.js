@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var Piece = require('models/piece');
+    var board = require('models/board');
 
 	var Pawn = Piece.extend({
 		defaults: {
@@ -11,7 +12,7 @@ define(function (require) {
 		},
 		initialize: function(options) {
 		},
-		getValidMoves: function(board) {
+		getValidMoves: function() {
 			var validMoves = [];
 			var row = this.get('row');
 			var col = this.get('column');

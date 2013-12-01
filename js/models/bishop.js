@@ -3,19 +3,18 @@ define(function (require) {
 	var Piece = require('models/piece');
     var board = require('models/board');
 
-	var Queen = Piece.extend({
+	var Bishop = Piece.extend({
 		defaults: {
 			player: undefined,
 			row: undefined,
 			column: undefined,
-			name: 'queen'
+			name: 'bishop'
 		},
 		initialize: function(options) {
 			this.setInitialPosition();
 		},
 		setInitialPosition: function() {
 			this.set('row', this.get('player') === 1 ? 7 : 0);
-			this.set('column', 3);
 		},
 		getValidMoves: function() {
 			var validMoves = [];
@@ -42,13 +41,6 @@ define(function (require) {
 				}
 			}
 
-			// STRAIGHT LINES
-
-			for (var i = 1 ; i < 8 ; i++ ) if (!checkPosition(col, row+i)) break;
-			for (var i = 1 ; i < 8 ; i++ ) if (!checkPosition(col, row-i)) break;
-			for (var i = 1 ; i < 8 ; i++ ) if (!checkPosition(col+i, row)) break;
-			for (var i = 1 ; i < 8 ; i++ ) if (!checkPosition(col-i, row)) break;
-			
 			// DIAGONALS
 
 			for (var i = 1 ; i < 8 ; i++) if (!checkPosition(col+i, row+i)) break;
@@ -61,5 +53,5 @@ define(function (require) {
 	});
 
 
-	return Queen;
+	return Bishop;
 });
