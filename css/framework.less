@@ -47,6 +47,18 @@ td {
     background: @blue;
 }
 
+.turn {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 65px;
+    height: 13px;
+    border: 1px black solid;
+    border-radius: 3px;
+    &.p1 { background: @whitePlayerColor; }
+    &.p2 { background: @blackPlayerColor; }
+}
+
 .history {
     font-size: 14px;
     text-transform: uppercase;

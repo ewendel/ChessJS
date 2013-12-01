@@ -13,11 +13,13 @@ define(function (require) {
 		var Setup = require('models/setup');
 	    board.setUp(Setup.DEFAULT);
 
+	    var turn = 1;
+
 		render();
 
 		function render() {
 			$(pieceNamesSelector).removeClass(pieceNames);
-			$('.p1, .p2').removeClass('p1 p2');
+			$(' table .p1, table .p2').removeClass('p1 p2');
 			for (var row=0 ; row < 8 ; row++) {
 				for (var col=0 ; col < 8 ; col++) {
 					var piece = board.getPieceForPosition(col, row);
@@ -54,7 +56,7 @@ define(function (require) {
 			var $clickedCell = $(e.currentTarget);
 			var clickedPosition = getPosition($clickedCell);
 			var piece = board.getPieceForPosition(clickedPosition.col, clickedPosition.row);
-
+			console.log(turn);
 			if ($clickedCell.hasClass('selected')) {
 				clearState();
 			}
@@ -63,11 +65,12 @@ define(function (require) {
 				var oldPosition = getPosition($oldCell);
 				var piece = board.getPieceForPosition(oldPosition.col, oldPosition.row);
 				performMove(piece, clickedPosition);
+				changeTurn();
 				render();
 				$clickedCell.addClass('p' + piece.get('player') + ' ' + piece.get('name'))
 				clearState();
 			}
-			else if (piece) {
+			else if (piece && hasTurn(piece)) {
 				clearState();
 				var moves = piece.getValidMoves(board);
 				$clickedCell.addClass('selected');
@@ -86,14 +89,20 @@ define(function (require) {
 				piece.move(position.col, position.row);
 				var markup = '<div class="{0}">{1} from {2} to {3}</div>';
 				markup = markup.format(className, piece.get('name').capitalize(), oldPos, newPos);
-				var node = $(markup);
-				console.log(markup);
 				$('.history').append(markup);
-				
 			}
 
 			function clearState() {
 				$('.validMove, .selected').removeClass('validMove selected');
+			}
+
+			function changeTurn() {
+				$('.turn').toggleClass('p1 p2');
+				turn === 1 ? turn++ : turn--;
+			}
+
+			function hasTurn(piece) {
+				return piece.get('player') == turn;	
 			}
 		}
 
