@@ -1,16 +1,27 @@
-@lime:                  #DDDE58;
-@thinred:               #f5d6d6;
-@sexyred:               #FD5157;
+@blackPlayerColor:      rgb(144, 238, 144);
+@whitePlayerColor:      rgb(240, 128, 128);
+@blue:                  rgb(50, 151, 247);
+@yellow:                #ffffe0;
+
+
+@topAppMargin: 80px;
+
 // FRAMEWORK STUFF
 
 body {
-    font-family: 'Open Sans', sans-serif;
+
+}
+
+main {
+    float: left;
+    margin: @topAppMargin;
 }
 
 table {
-    margin: 0 auto;
-    width: 960px;
-    height: 960px;
+    float: left;
+    margin: @topAppMargin 0px 0px 30px;
+    width: 800px;
+    height: 800px;
     border: 1px solid black;
     font: 'Pirat';
     font-size: 75px;
@@ -20,10 +31,14 @@ table {
 td {
     width: 12.5%;
     height: 12.5%;
+    line-height: 10px;
+}
+
+.piece {
+    cursor: pointer;
 }
 
 .black {
-    background: rgba(0,0,0, 0.7);
     background: black;
 }
 
@@ -32,8 +47,12 @@ td {
 }
 
 .validMove, .selected {
-    box-shadow: inset 0 0 13px 1px #ffffe0, inset 0 0 1px 1px black;
-    background: #ffffe0;
+    box-shadow: inset 0 0 13px 1px @blue, inset 0 0 1px 1px black;
+    background: @blue;
+}
+
+.validMove {
+    cursor: pointer;
 }
 
 .player-1 {
@@ -62,20 +81,17 @@ td {
     }
 }
 
-
 .horse {
     &::before {
         content: '♘';
     }
 }
 
-
 .queen {
     &::before {
         content: '♕';
     }
 }
-
 
 .king {
     &::before {

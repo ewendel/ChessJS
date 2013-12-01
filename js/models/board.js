@@ -2,9 +2,7 @@ define(function (require) {
 	var _ = require('underscore'); 
 
 	// initialized from outside
-	var state = [
-		[], [], [], [], [], [], [], []
-	];
+	var state = [];
 
 	var columnNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
@@ -33,6 +31,7 @@ define(function (require) {
 			if (outOfBounds(col, row)) return undefined;
 			return state[row][col] === undefined;
 		},
+		// convert (col,row) pair of ints to ex "H4"
 		path: function() {
 			if (arguments.length === 2) {
 				var col = arguments[0];
