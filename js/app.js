@@ -17,7 +17,7 @@ define(function (require) {
 
 	    var board = require('models/board');
 		var Setup = require('models/setup');
-	    board.setUp(Setup.PROMOTION);
+	    board.setUp(Setup.DEFAULT);
 
 	    var turn = 1;
 
