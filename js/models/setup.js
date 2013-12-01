@@ -95,7 +95,7 @@ define(function (require) {
 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
 			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
-			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+			 [undefined, undefined, new Pawn({player: 2, col: 2, row: 6}), undefined, undefined, undefined, undefined, undefined],
 
 
 		 [new Rook({player: 1, col: 0, row: 7}), 

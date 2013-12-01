@@ -36,9 +36,9 @@ define(function (require) {
 		},
 		rank: function() {
 			if (this.id() === 1) {
-				return Math.abs(this.get('row') - 7) + 1;
+				return Math.abs(this.row() - 7) + 1;
 			} else {
-				return this.get('row') + 1;
+				return this.row() + 1;
 			}
 		},
 		move: function(col, row) {

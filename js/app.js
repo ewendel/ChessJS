@@ -77,7 +77,6 @@ define(function (require) {
 				clearState();
 			}
 			else if (piece && hasTurn(piece)) {
-				if (piece.isPawn()) console.log(piece.rank());
 				clearState();
 				var moves = piece.getValidMoves(true);
 				$clickedCell.addClass('selected');
