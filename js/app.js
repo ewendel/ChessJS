@@ -17,11 +17,11 @@ define(function (require) {
 
 		function render() {
 			$(pieceNamesSelector).removeClass(pieceNames);
-			$('.player-1, .player-2').removeClass('player-1 player-2');
+			$('.p1, .p2').removeClass('p1 p2');
 			for (var row=0 ; row < 8 ; row++) {
 				for (var col=0 ; col < 8 ; col++) {
 					var piece = board.getPieceForPosition(col, row);
-					if (piece) $('.row-' + row + '.col-'+col).addClass(piece.get('name')).addClass('player-' + piece.get('player'));
+					if (piece) $('.row-' + row + '.col-'+col).addClass(piece.get('name')).addClass('p' + piece.get('player'));
 				}	
 			}
 		}
@@ -62,9 +62,9 @@ define(function (require) {
 				var $oldCell = $('.selected');
 				var oldPosition = getPosition($oldCell);
 				var piece = board.getPieceForPosition(oldPosition.col, oldPosition.row);
-				piece.move(clickedPosition.col, clickedPosition.row);
+				performMove(piece, clickedPosition);
 				render();
-				$clickedCell.addClass('player-' + piece.get('player') + ' ' + piece.get('name'))
+				$clickedCell.addClass('p' + piece.get('player') + ' ' + piece.get('name'))
 				clearState();
 			}
 			else if (piece) {
@@ -77,6 +77,19 @@ define(function (require) {
 				});
 			} else {
 				clearState();
+			}
+
+			function performMove(piece, position) {
+				var oldPos = board.path(piece.get('col'), piece.get('row'));
+				var newPos = board.path(position.col, position.row);
+				var className = 'p' + piece.get('player');
+				piece.move(position.col, position.row);
+				var markup = '<div class="{0}">{1} from {2} to {3}</div>';
+				markup = markup.format(className, piece.get('name').capitalize(), oldPos, newPos);
+				var node = $(markup);
+				console.log(markup);
+				$('.history').append(markup);
+				
 			}
 
 			function clearState() {
