@@ -1,5 +1,5 @@
 {
-  "name": "Chess",
+  "name": "ChessJS",
   "description": "Chess game made by Erik Wendel in pure JS",
   "version": "0.0.1",
   "private": true,
