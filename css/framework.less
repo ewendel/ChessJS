@@ -1,0 +1,84 @@
+@lime:                  #DDDE58;
+@thinred:               #f5d6d6;
+@sexyred:               #FD5157;
+// FRAMEWORK STUFF
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+table {
+    margin: 0 auto;
+    width: 960px;
+    height: 960px;
+    border: 1px solid black;
+    font: 'Pirat';
+    font-size: 75px;
+    text-align: center;
+}
+
+td {
+    width: 12.5%;
+    height: 12.5%;
+}
+
+.black {
+    background: rgba(0,0,0, 0.7);
+    background: black;
+}
+
+.white {
+    background: white;
+}
+
+.validMove {
+    box-shadow: inset 0 0 13px 1px #ffffe0, inset 0 0 1px 1px black;
+    background: #ffffe0;
+}
+
+.player-1 {
+    color: lightcoral;
+}
+
+.player-2 {
+    color: lightgreen;
+}
+
+.pawn {
+    &::before {
+        content: '♙';
+    }
+}
+
+.rook {
+    &::before {
+        content: '♖';
+    }
+}
+
+.bishop {
+    &::before {
+        content: '♗';
+    }
+}
+
+
+.horse {
+    &::before {
+        content: '♘';
+    }
+}
+
+
+.queen {
+    &::before {
+        content: '♕';
+    }
+}
+
+
+.king {
+    &::before {
+        content: '♔';
+    }
+}

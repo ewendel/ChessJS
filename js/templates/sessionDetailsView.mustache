@@ -1,0 +1,49 @@
+<div class="session" data-sessionId="{{sessionId}}">
+	<header>
+		<i class="icon-gamepad"></i>
+		{{title}}
+	</header>
+
+	<div class="addGame">
+		<div class="addGameAction">
+			<i class="icon-edit "/>
+			<span>Legg til kamp</span>
+		</div>
+	</div>
+	
+	{{#newSession}}
+		<div class="groups">
+			{{#groups}}
+				<div class="group">
+				{{#players}}
+					<div>{{name}}</div>
+				{{/players}}
+				</div>
+			{{/groups}}
+		</div>
+	{{/newSession}}
+	{{^newSession}}
+
+		<div class="changeSet box">
+			<div class="heading">Poengfangst</div>
+			{{#details}}
+				<div class="scoreChange">{{name}}<span>{{points}}p</span></div>
+			{{/details}}
+
+		</div>
+
+		<div class="result box">
+			<div class="heading">Resultat</div>
+			{{#details}}
+				<div class="scoreChange">{{name}}<span>{{wins}} / {{losses}}</span></div>
+			{{/details}}
+
+		</div>
+
+
+
+		<div class="heading">Kamper</div>
+		<div class="matches"></div>
+		
+	{{/newSession}}
+</div>

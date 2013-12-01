@@ -1,0 +1,14 @@
+logs.txt
+*logs.txt
+**logs.txt
+
+index.html
+
+target/**
+
+npm-debug.log
+
+*.sublime-workspace
+*.sublime-project
+
+*.DS_Store
