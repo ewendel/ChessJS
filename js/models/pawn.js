@@ -19,11 +19,9 @@ define(function (require) {
 			var col = this.col();;
 			var player = this.get('player');
 
-			var isFirstMove = (player === 1 && row === 6) || (player === 2 && row === 1);
-
 			var forwardRow = player === 1 ? row-1 : row+1;
 			
-			if (isFirstMove) {
+			if (!this.has('moved')) {
 				validMoves.push(board.path(col, player === 1 ? 5 : 2));
 				validMoves.push(board.path(col, player === 1 ? 4 : 3));
 			}

@@ -25,7 +25,7 @@ define(function (require) {
 
 		function render() {
 			$('table').find(pieceNamesSelector).removeClass(pieceNames);
-			$(' table .p1, table .p2').removeClass('p1 p2');
+			$('table .p1, table .p2').removeClass('p1 p2');
 			for (var row=0 ; row < 8 ; row++) {
 				for (var col=0 ; col < 8 ; col++) {
 					var piece = board.getPieceForPosition(col, row);
@@ -95,7 +95,7 @@ define(function (require) {
 				piece.move(position.col, position.row);
 				var markup = '<div class="{0}">{1} from {2} to {3}</div>';
 				markup = markup.format(className, piece.get('name').capitalize(), oldPos, newPos);
-				$('.history').append(markup);
+				$('.history').prepend(markup);
 			}
 
 			function clearState() {
