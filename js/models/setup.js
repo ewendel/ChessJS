@@ -50,6 +50,35 @@ define(function (require) {
 		  new Rook({player: 1, col: 7})]
 		  ];
 
+	var CASTLING = [
+		[new Rook({player: 2, col: 0}), 
+		 undefined,
+		 undefined,
+		 undefined,
+		 new King({player: 2}), 
+		 undefined,
+		 undefined,
+		 new Rook({player: 2, col: 7})],
+
+
+			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+			 [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+
+
+		 [new Rook({player: 1, col: 0}), 
+		  undefined,
+		  undefined,
+		  undefined,
+		  new King({player: 1}), 
+		  undefined,
+		  undefined,
+		  new Rook({player: 1, col: 7})]
+		  ];
+
 	if (!String.prototype.format) {
 	  String.prototype.format = function() {
 	    var args = arguments;
@@ -67,7 +96,8 @@ define(function (require) {
 	}
 
 	return {
-		DEFAULT: DEFAULT
+		DEFAULT: DEFAULT,
+		CASTLING: CASTLING
 	};	
 
 });
