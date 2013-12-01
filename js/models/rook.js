@@ -7,7 +7,7 @@ define(function (require) {
 		defaults: {
 			player: undefined,
 			row: undefined,
-			column: undefined,
+			col: undefined,
 			name: 'rook'
 		},
 		initialize: function(options) {
@@ -18,8 +18,8 @@ define(function (require) {
 		},
 		getValidMoves: function() {
 			var validMoves = [];
-			var row = this.get('row');
-			var col = this.get('column');
+			var row = this.row();;
+			var col = this.col();;
 			var player = this.get('player');
 			var self = this;
 

@@ -7,15 +7,15 @@ define(function (require) {
 		defaults: {
 			player: undefined,
 			row: undefined,
-			column: undefined,
+			col: undefined,
 			name: 'pawn'
 		},
 		initialize: function(options) {
 		},
 		getValidMoves: function() {
 			var validMoves = [];
-			var row = this.get('row');
-			var col = this.get('column');
+			var row = this.row();
+			var col = this.col();;
 			var player = this.get('player');
 
 			var isFirstMove = (player === 1 && row === 6) || (player === 2 && row === 1);

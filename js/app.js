@@ -66,7 +66,6 @@ define(function (require) {
 				render();
 				$clickedCell.addClass('player-' + piece.get('player') + ' ' + piece.get('name'))
 				clearState();
-
 			}
 			else if (piece) {
 				clearState();
@@ -76,6 +75,8 @@ define(function (require) {
 					var $validMoveCell = getCellForPath(path);
 					$validMoveCell.addClass('validMove');
 				});
+			} else {
+				clearState();
 			}
 
 			function clearState() {
@@ -84,10 +85,6 @@ define(function (require) {
 		}
 
 		$('td').click(clickHandler);
-
-		$('button').click(function() {
-			board.log();
-		});
 
     };
 });

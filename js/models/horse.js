@@ -7,7 +7,7 @@ define(function (require) {
 		defaults: {
 			player: undefined,
 			row: undefined,
-			column: undefined,
+			col: undefined,
 			name: 'horse'
 		},
 		initialize: function(options) {
@@ -16,10 +16,10 @@ define(function (require) {
 		setInitialPosition: function() {
 			this.set('row', this.get('player') === 1 ? 7 : 0);
 		},
-		getValidMoves: function(board) {
+		getValidMoves: function() {
 			var validMoves = [];
-			var row = this.get('row');
-			var col = this.get('column');
+			var row = this.row();
+			var col = this.col();
 			var player = this.get('player');
 
 			function add(col, row) {

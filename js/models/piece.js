@@ -8,7 +8,7 @@ define(function (require) {
 		defaults: {
 			player: undefined,
 			row: undefined,
-			column: undefined
+			col: undefined
 		},
 		isEmpty: function (col, row) {
 			return board.positionIsEmpty(col, row);
@@ -34,15 +34,20 @@ define(function (require) {
 
 			return false;
 		},
+		row: function() {
+			return parseInt(this.get('row'), 10);
+		},
+		col: function() {
+			return parseInt(this.get('col'), 10);
+		},
 		move: function(col, row) {
 			var validMoves = this.getValidMoves();
 			var path = board.path(col, row);
 			if (!_.contains(validMoves, path)) {
 				throw 'User tried to perform illegal move!';
 			}
-
 			board.setPosition(col, row, this);
-			board.setPosition(this.get('column'), this.get('row'), undefined);
+			board.setPosition(this.get('col'), this.get('row'), undefined);
 			this.set({
 				col: col,
 				row: row

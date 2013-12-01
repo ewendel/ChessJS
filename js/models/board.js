@@ -49,9 +49,6 @@ define(function (require) {
 					}
 				}
 			}
-		},
-		log: function() {
-			console.log(state);
 		}
 	};
 
