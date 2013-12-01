@@ -26,7 +26,7 @@ define(function (require) {
 				 || row + offset > 7
 				 || col - offset < 0 
 			 	 || col - offset > 7
-				 || row - offset < 0 
+				 || row - offset < 0
 				 || row - offset > 7
 			) {
 				return true;
@@ -34,23 +34,61 @@ define(function (require) {
 
 			return false;
 		},
+		id: function() {
+			return this.get('player');
+		},
+		other: function() {
+			return (this.get('player') % 2) + 1;
+		},
 		row: function() {
 			return parseInt(this.get('row'), 10);
 		},
 		col: function() {
 			return parseInt(this.get('col'), 10);
 		},
-		move: function(col, row) {
-			var validMoves = this.getValidMoves();
+		officerRow: function() {
+			return this.get('player') === 1 ? 7 : 0
+		},
+		pawnRow: function() {
+			return this.get('player') === 1 ? 6 : 1
+		},
+		isRook: function() {
+			return this.get('name') === 'rook';
+		},
+		isHorse: function() {
+			return this.get('name') === 'horse';
+		},
+		isBishop: function() {
+			return this.get('name') === 'bishop';
+		},
+		isQueen: function() {
+			return this.get('name') === 'queen';
+		},
+		isKing: function() {
+			return this.get('name') === 'king';
+		},
+		isPawn: function() {
+			return this.get('name') === 'pawn';
+		},
+		canMoveTo: function(col, row, specials) {
+			var validMoves = this.getValidMoves(specials);
 			var path = board.path(col, row);
-			if (!_.contains(validMoves, path)) {
+			return _.contains(validMoves, path);
+		},
+		move: function(col, row) {
+			var validMove = this.canMoveTo(col, row, true);
+			if (!validMove) {
 				throw 'User tried to perform illegal move!';
 			}
+			this._move(col,row);
+		},
+		_move: function(col, row) {
 			board.setPosition(col, row, this);
 			board.setPosition(this.get('col'), this.get('row'), undefined);
 			this.set({
 				col: col,
-				row: row
+				row: row,
+				moved: true
 			});
 		}
 

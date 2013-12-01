@@ -111,3 +111,43 @@ td {
         content: '♔';
     }
 }
+
+.promotion {
+    position: absolute;
+    background: rgba(255,255,255, 0.5);
+    display: none;
+    text-align: center;
+
+    &.visible {
+        display: block;
+    }
+
+    .pieces {
+        border-radius: 8px;
+        margin-top: 42%;
+        height: 100px;
+        width: 450px;
+        display: inline-block;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid black;
+    }
+
+    .selectablePiece {
+        display: inline-block;
+        font-size: 68px;
+        width: 100px;
+        height: 80px;
+        margin-top: 9px;
+        cursor: pointer;
+
+        &:hover {
+            color: @whitePlayerColor;
+            -webkit-transform: scale(1.2);
+        }
+
+        &::before {
+            position: relative;
+            top: 30px;
+        }
+    }
+}

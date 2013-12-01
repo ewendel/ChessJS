@@ -48,7 +48,11 @@ define(function (require) {
 			for (var i = 1 ; i < 8 ; i++ ) if (!checkPosition(col+i, row)) break;
 			for (var i = 1 ; i < 8 ; i++ ) if (!checkPosition(col-i, row)) break;
 			
-			return validMoves;}
+			return validMoves;
+		},
+		move: function(col, row, castling) {
+			Piece.prototype[castling ? "_move" : "move"].call(this, col, row);
+		}
 	});
 
 

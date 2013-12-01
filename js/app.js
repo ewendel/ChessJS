@@ -3,6 +3,12 @@ define(function (require) {
 	var _ = require('underscore'); 
 	var Backbone = require('backbone'); 
     var Mustache = require('libs/mustache/mustache');
+    var eventBus = require('component/events');
+
+    var Queen = require('models/queen');
+    var Rook = require('models/rook');
+    var Horse = require('models/horse');
+    var Bishop = require('models/bishop');
 
     var pieceNames = 'rook horse bishop queen king pawn';
     var pieceNamesSelector = '.rook, .horse, .bishop, .queen, .king, .pawn';
@@ -11,14 +17,14 @@ define(function (require) {
 
 	    var board = require('models/board');
 		var Setup = require('models/setup');
-	    board.setUp(Setup.DEFAULT);
+	    board.setUp(Setup.PROMOTION);
 
 	    var turn = 1;
 
 		render();
 
 		function render() {
-			$(pieceNamesSelector).removeClass(pieceNames);
+			$('table').find(pieceNamesSelector).removeClass(pieceNames);
 			$(' table .p1, table .p2').removeClass('p1 p2');
 			for (var row=0 ; row < 8 ; row++) {
 				for (var col=0 ; col < 8 ; col++) {
@@ -56,7 +62,7 @@ define(function (require) {
 			var $clickedCell = $(e.currentTarget);
 			var clickedPosition = getPosition($clickedCell);
 			var piece = board.getPieceForPosition(clickedPosition.col, clickedPosition.row);
-			console.log(turn);
+
 			if ($clickedCell.hasClass('selected')) {
 				clearState();
 			}
@@ -71,8 +77,9 @@ define(function (require) {
 				clearState();
 			}
 			else if (piece && hasTurn(piece)) {
+				if (piece.isPawn()) console.log(piece.rank());
 				clearState();
-				var moves = piece.getValidMoves(board);
+				var moves = piece.getValidMoves(true);
 				$clickedCell.addClass('selected');
 				_.each(moves, function(path) {
 					var $validMoveCell = getCellForPath(path);
@@ -106,7 +113,48 @@ define(function (require) {
 			}
 		}
 
+		function showPromotionView() {
+			var $table = $('table');
+			var $promotion = $('.promotion');
+
+			var width = $table.outerWidth();
+			var height = $table.outerHeight();
+			var top = $table.offset().top;
+			var left = $table.offset().left;
+
+			$promotion.css({ width: width, height: height, top: top, left: left }).addClass('visible');
+		};
+
+		function hidePromotionView() {
+			$('.promotion').removeClass('visible');
+		};
+
+		function promote(type) {
+		};
+
+		function promoteHandler(e) {
+			var $elt = $(e.currentTarget);
+			var pawn = board.findPromotionCandidate();
+			var piece;
+			if ($elt.hasClass('rook')) {
+				piece = new Rook({player: pawn.id(), col: pawn.col(), row: pawn.row()});
+			} else if ($elt.hasClass('horse')) {
+				piece = new Horse({player: pawn.id(), col: pawn.col(), row: pawn.row()});
+			} else if ($elt.hasClass('bishop')) {
+				piece = new Bishop({player: pawn.id(), col: pawn.col(), row: pawn.row()});
+			} else if ($elt.hasClass('queen')) {
+				piece = new Queen({player: pawn.id(), col: pawn.col(), row: pawn.row()});
+			}
+			board.setPosition(pawn.col(), pawn.row(), piece);
+			hidePromotionView();
+			render();
+		};
+
 		$('td').click(clickHandler);
+
+		$('.selectablePiece').click(promoteHandler);
+
+		eventBus.on('promotion', showPromotionView);
 
     };
 });

@@ -11,11 +11,6 @@ define(function (require) {
 			name: 'queen'
 		},
 		initialize: function(options) {
-			this.setInitialPosition();
-		},
-		setInitialPosition: function() {
-			this.set('row', this.get('player') === 1 ? 7 : 0);
-			this.set('col', 3);
 		},
 		getValidMoves: function() {
 			var validMoves = [];

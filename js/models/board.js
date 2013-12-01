@@ -1,10 +1,16 @@
 define(function (require) {
 	var _ = require('underscore'); 
+    var eventBus = require('component/events');
 
+    eventBus.on('promotion', function(position) {
+    	promotion = position;
+    });
 	// initialized from outside
 	var state = [];
 
 	var columnNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+	var promotion;
 
 	function outOfBounds(col, row) {
 		if (col < 0 || col > 7 || row < 0 || row > 7) return true;
@@ -30,6 +36,18 @@ define(function (require) {
 		positionIsEmpty: function(col, row) {
 			if (outOfBounds(col, row)) return undefined;
 			return state[row][col] === undefined;
+		},
+		getPiecesForPlayer: function(player) {
+			var pieces = [];
+			_.each(state, function(row) {
+				_.each(row, function(piece) {
+					if (piece && piece.id() === player) pieces.push(piece);
+				});
+			})
+			return pieces;
+		},
+		findPromotionCandidate: function() {
+			return promotion ? state[promotion.row][promotion.col] : undefined;
 		},
 		// convert (col,row) pair of ints to ex "H4"
 		path: function() {

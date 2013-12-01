@@ -2,6 +2,7 @@ define(function (require) {
 
 	var Piece = require('models/piece');
     var board = require('models/board');
+    var eventBus = require('component/events');
 
 	var Pawn = Piece.extend({
 		defaults: {
@@ -32,6 +33,19 @@ define(function (require) {
 
 
 			return validMoves;
+		},
+		rank: function() {
+			if (this.id() === 1) {
+				return Math.abs(this.get('row') - 7) + 1;
+			} else {
+				return this.get('row') + 1;
+			}
+		},
+		move: function(col, row) {
+			Piece.prototype.move.call(this, col, row);
+			if (this.rank() === 8) {
+				eventBus.trigger('promotion', { col: col, row: row });
+			}
 		}
 	});
 

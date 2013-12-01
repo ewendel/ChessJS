@@ -10,12 +10,6 @@ define(function (require) {
 			col: undefined,
 			name: 'bishop'
 		},
-		initialize: function(options) {
-			this.setInitialPosition();
-		},
-		setInitialPosition: function() {
-			this.set('row', this.get('player') === 1 ? 7 : 0);
-		},
 		getValidMoves: function() {
 			var validMoves = [];
 			var row = this.row();
