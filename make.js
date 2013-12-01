@@ -43,6 +43,10 @@ target.all = function() {
     target.build();
 };
 
+target.css = function() {
+    buildCss();
+};
+
 target.jshint = function() {
     var files = glob.sync(path.join('js', '**', '*.js'));
 
