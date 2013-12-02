@@ -5,6 +5,7 @@ define(function (require) {
     eventBus.on('promotion', function(position) {
     	promotion = position;
     });
+    
 	// initialized from outside
 	var state = [];
 

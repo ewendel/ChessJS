@@ -17,7 +17,7 @@ define(function (require) {
 		getValidMoves: function() {
 			var validMoves = [];
 			var row = this.row();
-			var col = this.col();;
+			var col = this.col();
 			var player = this.get('player');
 
 			var forwardRow = player === 1 ? row-1 : row+1;
