@@ -7,11 +7,15 @@ define(function (require) {
     var Path = require('component/path');
     var LegacyKiller = require('component/legacykiller');
     var HistoryView = require('component/historyView');
+    var PromotionView = require('views/promotionView');
 
     var Queen = require('models/queen');
     var Rook = require('models/rook');
     var Horse = require('models/horse');
     var Bishop = require('models/bishop');
+
+    var Board = require('models/board');
+	var Setup = require('models/setup');
 
     var pieceNames = 'rook horse bishop queen king pawn';
     var pieceNamesSelector = '.rook, .horse, .bishop, .queen, .king, .pawn';
@@ -21,13 +25,10 @@ define(function (require) {
     return function() {
 
     	LegacyKiller();
-
-	    var Board = require('models/board');
-		var Setup = require('models/setup');
-
 		new HistoryView({ el: $('.history') });
-
-	    Board.init(Setup.DEFAULT);
+		new PromotionView({ el: $('.promotion'), gameArea: $('table') });
+	    Board.init(Setup.PROMOTION);
+		eventBus.on('promotion:complete', render);
 
 
 	    var turn = 1;
@@ -132,48 +133,11 @@ define(function (require) {
 			return piece.get('player') == turn;	
 		}
 
-		function showPromotionView() {
-			var $table = $('table');
-			var $promotion = $('.promotion');
-
-			var width = $table.outerWidth();
-			var height = $table.outerHeight();
-			var top = $table.offset().top;
-			var left = $table.offset().left;
-
-			$promotion.css({ width: width, height: height, top: top, left: left }).addClass('visible');
-		};
-
-		function hidePromotionView() {
-			$('.promotion').removeClass('visible');
-		};
-
-		function promote(type) {
-		};
-
-		function promoteHandler(e) {
-			var $elt = $(e.currentTarget);
-			var pawn = Board.findPromotionCandidate();
-			var piece;
-			if ($elt.hasClass('rook')) {
-				piece = new Rook({player: pawn.id(), col: pawn.col(), row: pawn.row()});
-			} else if ($elt.hasClass('horse')) {
-				piece = new Horse({player: pawn.id(), col: pawn.col(), row: pawn.row()});
-			} else if ($elt.hasClass('bishop')) {
-				piece = new Bishop({player: pawn.id(), col: pawn.col(), row: pawn.row()});
-			} else if ($elt.hasClass('queen')) {
-				piece = new Queen({player: pawn.id(), col: pawn.col(), row: pawn.row()});
-			}
-			Board.setPosition(pawn.col(), pawn.row(), piece);
-			hidePromotionView();
-			render();
-		};
+		
 
 		$('td').click(clickHandler);
 
-		$('.selectablePiece').click(promoteHandler);
 
-		eventBus.on('promotion', showPromotionView);
 
     };
 });

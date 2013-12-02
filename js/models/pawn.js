@@ -43,6 +43,7 @@ define(function (require) {
 		move: function(col, row) {
 			Piece.prototype.move.call(this, col, row);
 			if (this.rank() === 8) {
+				console.log('triggering promotion');
 				eventBus.trigger('promotion', { col: col, row: row });
 			}
 		}
