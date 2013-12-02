@@ -3,6 +3,7 @@ define(function (require) {
 	var Piece = require('models/piece');
     var board = require('models/board');
     var eventBus = require('component/events');
+    var Path = require('component/path');
 
 	var Pawn = Piece.extend({
 		defaults: {
@@ -22,12 +23,12 @@ define(function (require) {
 			var forwardRow = player === 1 ? row-1 : row+1;
 			
 			if (!this.has('moved')) {
-				validMoves.push(board.path(col, player === 1 ? 5 : 2));
-				validMoves.push(board.path(col, player === 1 ? 4 : 3));
+				validMoves.push(Path.convert(col, player === 1 ? 5 : 2));
+				validMoves.push(Path.convert(col, player === 1 ? 4 : 3));
 			}
-			if (this.isEmpty(col, forwardRow)) validMoves.push(board.path(col, forwardRow));
-			if (this.hasOpponentPiece(col+1, forwardRow)) validMoves.push(board.path(col+1, forwardRow));
-			if (this.hasOpponentPiece(col-1, forwardRow)) validMoves.push(board.path(col-1, forwardRow));
+			if (this.isEmpty(col, forwardRow)) validMoves.push(Path.convert(col, forwardRow));
+			if (this.hasOpponentPiece(col+1, forwardRow)) validMoves.push(Path.convert(col+1, forwardRow));
+			if (this.hasOpponentPiece(col-1, forwardRow)) validMoves.push(Path.convert(col-1, forwardRow));
 
 
 			return validMoves;

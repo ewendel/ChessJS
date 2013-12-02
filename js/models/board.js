@@ -8,8 +8,6 @@ define(function (require) {
 	// initialized from outside
 	var state = [];
 
-	var columnNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-
 	var promotion;
 
 	function outOfBounds(col, row) {
@@ -18,7 +16,7 @@ define(function (require) {
 	}
 
 	var Board = {
-		setUp: function(board) {
+		init: function(board) {
 			if (!board || !_.isArray(board) || board.length !== 8) {
 				throw "Board was set up with illegal params"
 			}
@@ -63,24 +61,6 @@ define(function (require) {
 		},
 		findPromotionCandidate: function() {
 			return promotion ? state[promotion.row][promotion.col] : undefined;
-		},
-		// convert (col,row) pair of ints to ex "H4"
-		path: function() {
-			if (arguments.length === 2) {
-				var col = arguments[0];
-				var row = arguments[1];
-				return columnNames[col] + row;
-			} else {
-				var path = arguments[0];
-				for (var i=0 ; i < 8 ; i++) {
-					if (path.substr(0,1) === columnNames[i]) {
-						return {
-							col: i,
-							row: path.substr(1,2)
-						};
-					}
-				}
-			}
 		}
 	};
 

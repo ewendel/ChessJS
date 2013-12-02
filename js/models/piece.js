@@ -3,6 +3,8 @@ define(function (require) {
 	var Model = require('base/model');
     var board = require('models/board');
     var _ = require('underscore');
+    var Path = require('component/path');
+    var eventBus = require('component/events');
 
 	var Piece = Model.extend({
 		defaults: {
@@ -72,7 +74,7 @@ define(function (require) {
 		},
 		canMoveTo: function(col, row, specials) {
 			var validMoves = this.getValidMoves(specials);
-			var path = board.path(col, row);
+			var path = Path.convert(col, row);
 			return _.contains(validMoves, path);
 		},
 		move: function(col, row) {
@@ -83,6 +85,13 @@ define(function (require) {
 			this._move(col,row);
 		},
 		_move: function(col, row) {
+			var move = {
+				piece: this,
+				oldPos: Path.convert(this.col(), this.row()),
+				newPos: Path.convert(col, row)
+			};
+
+			eventBus.trigger('move', move);
 			board.setPosition(col, row, this);
 			board.setPosition(this.get('col'), this.get('row'), undefined);
 			this.set({

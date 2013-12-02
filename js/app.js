@@ -4,6 +4,9 @@ define(function (require) {
 	var Backbone = require('backbone'); 
     var Mustache = require('libs/mustache/mustache');
     var eventBus = require('component/events');
+    var Path = require('component/path');
+    var LegacyKiller = require('component/legacykiller');
+    var HistoryView = require('component/historyView');
 
     var Queen = require('models/queen');
     var Rook = require('models/rook');
@@ -17,16 +20,14 @@ define(function (require) {
 
     return function() {
 
-    	if ($.browser.msie && parseInt($.browser.version,10) < 9) {
-    		$('body').empty();
-    		alert('Du bruker en gammel nettleser som ikke støttes. Oppgrader til Google Chrome, Mozilla Firefox eller en annen moderne nettleser for å bruke denne siden');
-    		return;
+    	LegacyKiller();
 
-    	}
-
-	    var board = require('models/board');
+	    var Board = require('models/board');
 		var Setup = require('models/setup');
-	    board.setUp(Setup.DEFAULT);
+
+		new HistoryView({ el: $('.history') });
+
+	    Board.init(Setup.DEFAULT);
 
 
 	    var turn = 1;
@@ -36,9 +37,9 @@ define(function (require) {
 		function performCPUMove(player) {
 	    	try {
 				if (!player) throw 'performCPUMove needs playerId';
-		    	var moves = board.generateMoves(player);
+		    	var moves = Board.generateMoves(player);
 		    	var move = moves[Math.floor(Math.random()*moves.length)];
-		    	var position = board.path(move.position);
+		    	var position = Path.convert(move.position);
 		    	performMove(move.piece, position);
 	    	} catch (e) {
 	    		debugger;
@@ -50,14 +51,14 @@ define(function (require) {
 			$('table .p1, table .p2').removeClass('p1 p2');
 			for (var row=0 ; row < 8 ; row++) {
 				for (var col=0 ; col < 8 ; col++) {
-					var piece = board.getPieceForPosition(col, row);
+					var piece = Board.getPieceForPosition(col, row);
 					if (piece) $('.row-' + row + '.col-'+col).addClass(piece.get('name')).addClass('p' + piece.get('player'));
 				}	
 			}
 		}
 
 		function getCellForPath(path) {
-			var position = board.path(path);
+			var position = Path.convert(path);
 			return $('.row-' + position.row + '.col-' + position.col);
 		}
 		
@@ -83,7 +84,7 @@ define(function (require) {
 	    function clickHandler(e) {
 			var $clickedCell = $(e.currentTarget);
 			var clickedPosition = getPosition($clickedCell);
-			var piece = board.getPieceForPosition(clickedPosition.col, clickedPosition.row);
+			var piece = Board.getPieceForPosition(clickedPosition.col, clickedPosition.row);
 
 			if ($clickedCell.hasClass('selected')) {
 				clearState();
@@ -91,7 +92,7 @@ define(function (require) {
 			else if ($clickedCell.hasClass('validMove')) {
 				var $oldCell = $('.selected');
 				var oldPosition = getPosition($oldCell);
-				var piece = board.getPieceForPosition(oldPosition.col, oldPosition.row);
+				var piece = Board.getPieceForPosition(oldPosition.col, oldPosition.row);
 				performMove(piece, clickedPosition);
 				render();
 				$clickedCell.addClass('p' + piece.get('player') + ' ' + piece.get('name'))
@@ -111,13 +112,9 @@ define(function (require) {
 
 		}
 		function performMove(piece, position) {
-			var oldPos = board.path(piece.get('col'), piece.get('row'));
-			var newPos = board.path(position.col, position.row);
-			var className = 'p' + piece.get('player');
+			var oldPos = Path.convert(piece.get('col'), piece.get('row'));
+			var newPos = Path.convert(position.col, position.row);
 			piece.move(position.col, position.row);
-			var markup = '<div class="{0}">{1} from {2} to {3}</div>';
-			markup = markup.format(className, piece.get('name').capitalize(), oldPos, newPos);
-			$('.history').prepend(markup);
 			changeTurn();
 		}
 
@@ -156,7 +153,7 @@ define(function (require) {
 
 		function promoteHandler(e) {
 			var $elt = $(e.currentTarget);
-			var pawn = board.findPromotionCandidate();
+			var pawn = Board.findPromotionCandidate();
 			var piece;
 			if ($elt.hasClass('rook')) {
 				piece = new Rook({player: pawn.id(), col: pawn.col(), row: pawn.row()});
@@ -167,7 +164,7 @@ define(function (require) {
 			} else if ($elt.hasClass('queen')) {
 				piece = new Queen({player: pawn.id(), col: pawn.col(), row: pawn.row()});
 			}
-			board.setPosition(pawn.col(), pawn.row(), piece);
+			Board.setPosition(pawn.col(), pawn.row(), piece);
 			hidePromotionView();
 			render();
 		};

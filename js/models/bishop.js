@@ -2,6 +2,7 @@ define(function (require) {
 
 	var Piece = require('models/piece');
     var board = require('models/board');
+    var Path = require('component/path');
 
 	var Bishop = Piece.extend({
 		defaults: {
@@ -19,7 +20,7 @@ define(function (require) {
 
 			function add(col, row) {
 				if (col < 0 || col > 7 || row < 0 || row > 7) return;
-				validMoves.push(board.path(col, row));
+				validMoves.push(Path.convert(col, row));
 			}
 
 			function checkPosition(col, row) {

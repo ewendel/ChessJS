@@ -2,6 +2,7 @@ define(function (require) {
 
 	var Piece = require('models/piece');
     var board = require('models/board');
+    var Path = require('component/path');
 
 	var Horse = Piece.extend({
 		defaults: {
@@ -24,7 +25,7 @@ define(function (require) {
 
 			function add(col, row) {
 				if (col < 0 || col > 7 || row < 0 || row > 7) return;
-				validMoves.push(board.path(col, row));
+				validMoves.push(Path.convert(col, row));
 			}
 
 			if (this.isEmpty(col+1, row+2) || this.hasOpponentPiece(col+1,row+2)) add(col+1, row+2);
