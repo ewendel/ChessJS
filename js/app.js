@@ -3,17 +3,18 @@ define(function (require) {
 	var _ = require('underscore'); 
 	var Backbone = require('backbone'); 
     var Mustache = require('libs/mustache/mustache');
+
     var eventBus = require('component/events');
     var Path = require('component/path');
     var LegacyKiller = require('component/legacykiller');
-    var HistoryView = require('component/historyView');
+
+    var HistoryView = require('views/historyView');
     var PromotionView = require('views/promotionView');
 
     var Queen = require('models/queen');
     var Rook = require('models/rook');
     var Horse = require('models/horse');
     var Bishop = require('models/bishop');
-
     var Board = require('models/board');
 	var Setup = require('models/setup');
 
