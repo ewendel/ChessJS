@@ -13,6 +13,8 @@ define(function (require) {
     var pieceNames = 'rook horse bishop queen king pawn';
     var pieceNamesSelector = '.rook, .horse, .bishop, .queen, .king, .pawn';
 
+    var computerMode = true;
+
     return function() {
 
     	if ($.browser.msie && parseInt($.browser.version,10) < 9) {
@@ -26,9 +28,22 @@ define(function (require) {
 		var Setup = require('models/setup');
 	    board.setUp(Setup.DEFAULT);
 
+
 	    var turn = 1;
 
 		render();
+
+		function performCPUMove(player) {
+	    	try {
+				if (!player) throw 'performCPUMove needs playerId';
+		    	var moves = board.generateMoves(player);
+		    	var move = moves[Math.floor(Math.random()*moves.length)];
+		    	var position = board.path(move.position);
+		    	performMove(move.piece, position);
+	    	} catch (e) {
+	    		debugger;
+	    	}
+		};
 
 		function render() {
 			$('table').find(pieceNamesSelector).removeClass(pieceNames);
@@ -78,7 +93,6 @@ define(function (require) {
 				var oldPosition = getPosition($oldCell);
 				var piece = board.getPieceForPosition(oldPosition.col, oldPosition.row);
 				performMove(piece, clickedPosition);
-				changeTurn();
 				render();
 				$clickedCell.addClass('p' + piece.get('player') + ' ' + piece.get('name'))
 				clearState();
@@ -95,28 +109,30 @@ define(function (require) {
 				clearState();
 			}
 
-			function performMove(piece, position) {
-				var oldPos = board.path(piece.get('col'), piece.get('row'));
-				var newPos = board.path(position.col, position.row);
-				var className = 'p' + piece.get('player');
-				piece.move(position.col, position.row);
-				var markup = '<div class="{0}">{1} from {2} to {3}</div>';
-				markup = markup.format(className, piece.get('name').capitalize(), oldPos, newPos);
-				$('.history').prepend(markup);
-			}
+		}
+		function performMove(piece, position) {
+			var oldPos = board.path(piece.get('col'), piece.get('row'));
+			var newPos = board.path(position.col, position.row);
+			var className = 'p' + piece.get('player');
+			piece.move(position.col, position.row);
+			var markup = '<div class="{0}">{1} from {2} to {3}</div>';
+			markup = markup.format(className, piece.get('name').capitalize(), oldPos, newPos);
+			$('.history').prepend(markup);
+			changeTurn();
+		}
 
-			function clearState() {
-				$('.validMove, .selected').removeClass('validMove selected');
-			}
+		function clearState() {
+			$('.validMove, .selected').removeClass('validMove selected');
+		}
 
-			function changeTurn() {
-				$('.turn').toggleClass('p1 p2');
-				turn === 1 ? turn++ : turn--;
-			}
+		function changeTurn() {
+			$('.turn').toggleClass('p1 p2');
+			turn === 1 ? turn++ : turn--;
+			turn === 2 && computerMode ? performCPUMove(2) : null;
+		}
 
-			function hasTurn(piece) {
-				return piece.get('player') == turn;	
-			}
+		function hasTurn(piece) {
+			return piece.get('player') == turn;	
 		}
 
 		function showPromotionView() {

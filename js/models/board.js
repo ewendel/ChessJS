@@ -46,6 +46,21 @@ define(function (require) {
 			})
 			return pieces;
 		},
+		generateMoves: function(player) {
+			var moves = [];
+			var pieces = Board.getPiecesForPlayer(2);
+			_.each(pieces, function(piece) {
+				var validMoves = piece.getValidMoves();
+				_.each(validMoves, function(move) {
+					moves.push({
+						piece: piece,
+						position: move
+					});
+				});
+			});
+			if (moves.length === 0) debugger;
+			return moves;
+		},
 		findPromotionCandidate: function() {
 			return promotion ? state[promotion.row][promotion.col] : undefined;
 		},
