@@ -5,7 +5,7 @@ define(function (require) {
     eventBus.on('promotion', function(position) {
     	promotion = position;
     });
-    
+
 	// initialized from outside
 	var state = [];
 
@@ -62,6 +62,14 @@ define(function (require) {
 		},
 		findPromotionCandidate: function() {
 			return promotion ? state[promotion.row][promotion.col] : undefined;
+		},
+		debug: function() {
+			_.each(state, function(row, index) {
+				console.log('Row' + (index + 1) + ':');
+				_.each(state[index], function(piece) {
+					console.log(piece);
+				});
+			});
 		}
 	};
 

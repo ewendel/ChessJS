@@ -31,7 +31,6 @@ define(function (require) {
 	    Board.init(Setup.PROMOTION);
 		eventBus.on('promotion:complete', render);
 
-
 	    var turn = 1;
 
 		render();
