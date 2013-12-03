@@ -28,7 +28,7 @@ define(function (require) {
     	LegacyKiller();
 		new HistoryView({ el: $('.history') });
 		new PromotionView({ el: $('.promotion'), gameArea: $('table') });
-	    Board.init(Setup.PROMOTION);
+	    Board.init(Setup.DEFAULT);
 
 		var game = new Game();
 		var gameView = new GameView({ el: $('table'), model: game })

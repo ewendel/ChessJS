@@ -1,7 +1,7 @@
 define(function (require) {
 
 	var Settings = {
-		computerMode: false
+		computerMode: true
 	};
 
 
