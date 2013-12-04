@@ -1,7 +1,15 @@
 define(function (require) {
 
 	var Settings = {
-		computerMode: true
+		computerMode: true,
+		toggleAI: function() {
+			if (Settings.computerMode) {
+				Settings.computerMode = false;
+			} else {
+				Settings.computerMode = true;
+			}
+		}
+
 	};
 
 
