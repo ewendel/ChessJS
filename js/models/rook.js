@@ -5,15 +5,9 @@ define(function (require) {
     var Path = require('component/path');
 
 	var Rook = Piece.extend({
-		defaults: {
-			player: undefined,
-			row: undefined,
-			col: undefined,
+		defaults: _.extend({
 			name: 'rook'
-		},
-		initialize: function(options) {
-			this.setInitialPosition();
-		},
+		}, Piece.prototype.defaults),
 		setInitialPosition: function() {
 			this.set('row', this.get('player') === 1 ? 7 : 0);
 		},

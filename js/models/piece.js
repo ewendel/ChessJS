@@ -8,9 +8,11 @@ define(function (require) {
 
 	var Piece = Model.extend({
 		defaults: {
-			player: undefined,
-			row: undefined,
-			col: undefined
+			player: 1,
+			row: 0,
+			col: 0
+		},
+		initialize: function() {
 		},
 		isEmpty: function (col, row) {
 			return board.positionIsEmpty(col, row);
@@ -41,6 +43,12 @@ define(function (require) {
 		},
 		other: function() {
 			return (this.get('player') % 2) + 1;
+		},
+		path: function() {
+			return Path.convert(this.col(), this.row());
+		},
+		position: function() {
+			return { col: this.col(), row: this.row() };
 		},
 		row: function() {
 			return parseInt(this.get('row'), 10);

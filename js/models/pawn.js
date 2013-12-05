@@ -6,14 +6,9 @@ define(function (require) {
     var Path = require('component/path');
 
 	var Pawn = Piece.extend({
-		defaults: {
-			player: undefined,
-			row: undefined,
-			col: undefined,
+		defaults: _.extend({
 			name: 'pawn'
-		},
-		initialize: function(options) {
-		},
+		}, Piece.prototype.defaults),
 		getValidMoves: function() {
 			var validMoves = [];
 			var row = this.row();

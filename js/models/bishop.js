@@ -5,12 +5,9 @@ define(function (require) {
     var Path = require('component/path');
 
 	var Bishop = Piece.extend({
-		defaults: {
-			player: undefined,
-			row: undefined,
-			col: undefined,
+		defaults: _.extend({
 			name: 'bishop'
-		},
+		}, Piece.prototype.defaults),
 		getValidMoves: function() {
 			var validMoves = [];
 			var row = this.row();

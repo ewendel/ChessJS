@@ -5,14 +5,9 @@ define(function (require) {
     var Path = require('component/path');
 
 	var Queen = Piece.extend({
-		defaults: {
-			player: undefined,
-			row: undefined,
-			col: undefined,
+		defaults: _.extend({
 			name: 'queen'
-		},
-		initialize: function(options) {
-		},
+		}, Piece.prototype.defaults),
 		getValidMoves: function() {
 			var validMoves = [];
 			var row = this.row();
