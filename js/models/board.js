@@ -1,22 +1,61 @@
 define(function (require) {
 	var _ = require('underscore'); 
     var eventBus = require('component/events');
+    var Path = require('component/path');
 
     eventBus.on('promotion', function(position) {
     	promotion = position;
     });
 
-	// initialized from outside
 	var state = [];
 
 	var promotion;
 
 	function outOfBounds(col, row) {
+		if (arguments.length === 1) {
+			var position = arguments[0];
+			col = position.col;
+			row = position.row;
+		}
 		if (col < 0 || col > 7 || row < 0 || row > 7) return true;
 		return false;
 	}
 
 	var Board = {
+		// NEW API
+		clear: function() {
+			state = undefined;
+			state = [];
+			_.times(8, function() { state.push([]); _.times(8, function() { _.last(state).push(undefined); }); })
+		},
+		add: function(piece) {
+			if (!piece) throw "Board:add() needs piece param";
+			if (outOfBounds(piece.position())) throw "Board:add() position out of bounds";
+			var col = piece.position().col;
+			var row = piece.position().row;
+			state[row][col] = piece;
+		},
+		get: function(col, row) {
+			if (arguments.length === 1) {
+				var position = Path.convert(col);
+				col = position.col;
+				row = position.row;
+			}
+			return state[row][col];
+		},
+		remove: function(col, row) {
+			if (arguments.length === 1) {
+				var position = Path.convert(col);
+				col = position.col;
+				row = position.row;
+			}
+			state[row][col] = undefined;
+		},
+		pieces: function() {
+			return _.size(_.compact(_.flatten(state)));
+		},
+
+		// OLD API
 		init: function(board) {
 			if (!board || !_.isArray(board) || board.length !== 8) {
 				throw "Board was set up with illegal params"
@@ -63,6 +102,7 @@ define(function (require) {
 		findPromotionCandidate: function() {
 			return promotion ? state[promotion.row][promotion.col] : undefined;
 		},
+
 		debug: function() {
 			_.each(state, function(row, index) {
 				console.log('Row' + (index + 1) + ':');
