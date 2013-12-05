@@ -12,14 +12,18 @@
     "underscore": "1.5.2",
     "string-hash": "~1.1.0",
     "shelljs": "~0.2.2",
-    "colors" : "0.6.x",
-    "pad" : "0.0.4",
-    "glob" : "3.2.7",
-    "path" : "0.4.9",
-    "zlib" : "1.0.5",
-    "hogan.js" : "2.0.0",
-    "moment" : "2.4.0",
-    "rjs" :  "~2.10.0",
-    "less" : "~1.4.2"
+    "colors": "0.6.x",
+    "pad": "0.0.4",
+    "glob": "3.2.7",
+    "path": "0.4.9",
+    "zlib": "1.0.5",
+    "hogan.js": "2.0.0",
+    "moment": "2.4.0",
+    "rjs": "~2.10.0",
+    "less": "~1.4.2",
+    "karma": "~0.10.7"
+  },
+  "devDependencies": {
+    "karma": "~0.10.7"
   }
 }
