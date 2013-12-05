@@ -3,16 +3,18 @@ define(function (require) {
 	var Model = require('base/model');
 	var Settings = require('component/settings');
     var Path = require('component/path');
-    var Board = require('models/board');
 
 	var Game = Model.extend({
 		defaults: {
 			turn: 1
 		},
+		initialize: function(options) {
+			this.board = options.board;
+		},
 		performCPUMove: function(player) {
 	    	try {
 				if (!player) throw 'performCPUMove needs playerId';
-		    	var moves = Board.generateMoves(player);
+		    	var moves = this.board.generateMoves(player);
 		    	var move = moves[Math.floor(Math.random()*moves.length)];
 		    	var position = Path.convert(move.position);
 		    	this.performMove(move.piece, position);
@@ -38,6 +40,10 @@ define(function (require) {
 		},
 		hasTurn: function(piece) {
 			return piece.get('player') == this.get('turn');	
+		},
+		isCheck: function(player) {
+			if (!player) throw "Checktester needs a player"
+			return true;	
 		}
 	});
 

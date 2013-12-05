@@ -33,7 +33,7 @@ define(function (require) {
 		new AIView({ el: $('.computer'), settings: Settings });
 	    Board.init(Setup.DEFAULT);
 
-		var game = new Game();
+		var game = new Game({ board: Board });
 		var gameView = new GameView({ el: $('table'), model: game })
 		new TurnView({ el : $('.turn'), model: game });
 	    gameView.render();
