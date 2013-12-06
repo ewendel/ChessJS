@@ -86,7 +86,7 @@ define(function (require) {
 		},
 		generateMoves: function(player) {
 			var moves = [];
-			var pieces = Board.getPiecesForPlayer(2);
+			var pieces = Board.getPiecesForPlayer(player);
 			_.each(pieces, function(piece) {
 				var validMoves = piece.getValidMoves();
 				_.each(validMoves, function(move) {
@@ -104,12 +104,27 @@ define(function (require) {
 		},
 
 		debug: function() {
+			var boardAsString = "";
+			boardAsString += "Chess Board:\n --------------------------\n";
 			_.each(state, function(row, index) {
-				console.log('Row' + (index + 1) + ':');
 				_.each(state[index], function(piece) {
-					console.log(piece);
+					if (!piece) {
+						boardAsString += "   ";
+					} else {
+						var pieceString = piece.get('name').substr(0,1);
+						console.log(pieceString);
+						if (piece.get('player') === 1) {
+							pieceString = pieceString.charAt(0).toUpperCase();
+						} else {
+							pieceString = pieceString.charAt(0);
+						}
+						boardAsString += " " + pieceString + " ";
+					}
 				});
+				boardAsString += "\n";
 			});
+			boardAsString += "---------------------------"
+			console.log(boardAsString);
 		}
 	};
 
