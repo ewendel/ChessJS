@@ -43,7 +43,17 @@ define(function (require) {
 		},
 		isCheck: function(player) {
 			if (!player) throw "Checktester needs a player"
-			return true;	
+			var moves = this.board.generateMoves(player % 2 + 1)
+			var pieces = this.board.getPiecesForPlayer(player);
+			var king = _.filter(pieces, function(piece) { return piece.get('name') === 'king'; })[0];
+			var kingsPath = king.path();
+			var isCheck = false;
+			_.each(moves, function(move) {
+				if (move.position === kingsPath) {
+					isCheck = true;
+				}
+			});
+			return isCheck;	
 		}
 	});
 
