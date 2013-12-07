@@ -4,9 +4,9 @@ define(function (require) {
     var board = require('models/board');
     var Path = require('component/path');
 
-	var Horse = Piece.extend({
+	var Knight = Piece.extend({
 		defaults: _.extend({
-			name: 'horse'
+			name: 'knight'
 		}, Piece.prototype.defaults),
 		setInitialPosition: function() {
 			this.set('row', this.get('player') === 1 ? 7 : 0);
@@ -37,5 +37,5 @@ define(function (require) {
 	});
 
 
-	return Horse;
+	return Knight;
 });

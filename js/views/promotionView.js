@@ -4,7 +4,7 @@ define(function (require) {
     var eventBus = require('component/events');
     var Queen = require('models/queen');
     var Rook = require('models/rook');
-    var Horse = require('models/horse');
+    var Horse = require('models/knight');
     var Bishop = require('models/bishop');
     var Board = require('models/board');
 

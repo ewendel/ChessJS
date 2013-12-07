@@ -5,7 +5,7 @@ define(function(require) {
     var King = require('models/king');
     var Queen = require('models/queen');
     var Rook = require('models/rook');
-    var Knight = require('models/horse');
+    var Knight = require('models/knight');
     var Bishop = require('models/bishop');
     var Pawn = require('models/pawn');
 

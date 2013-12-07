@@ -20,7 +20,7 @@ define(function (require) {
 	var Setup = require('models/setup');
     var Queen = require('models/queen');
     var Rook = require('models/rook');
-    var Horse = require('models/horse');
+    var Knight = require('models/knight');
     var Bishop = require('models/bishop');
     
     var computerMode = true;
