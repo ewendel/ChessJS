@@ -5,15 +5,9 @@ define(function (require) {
     var Path = require('component/path');
 
 	var King = Piece.extend({
-		defaults: {
-			player: undefined,
-			row: undefined,
-			col: undefined,
+		defaults: _.extend({
 			name: 'king'
-		},
-		initialize: function(options) {
-			this.setInitialPosition();
-		},
+		}, Piece.prototype.defaults),
 		setInitialPosition: function() {
 			this.set('row', this.officerRow());
 			this.set('col', 4);
