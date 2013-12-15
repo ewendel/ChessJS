@@ -13,9 +13,9 @@ define(function (require) {
 		return false;
 	}
 
-	return function() {
+	return function(initialState) {
 		var self = this;
-		this.state = [[],[],[],[],[],[],[],[]];
+		this.state = initialState || [[],[],[],[],[],[],[],[]];
 
 		// NEW API
 		this.clear = function() {
@@ -52,6 +52,12 @@ define(function (require) {
 
 		this.pieces = function() {
 			return _.size(_.compact(_.flatten(self.state)));
+		};
+
+		this.clone = function() {
+			return this.state.map(function(arr) {
+			    return arr.slice();
+			});
 		};
 
 		// OLD API

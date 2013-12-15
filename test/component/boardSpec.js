@@ -52,5 +52,26 @@ define(function(require) {
             board.remove(0,0);
             expect(board.get(0,0)).toBe(undefined);
         });
+
+        it('returns clone of state', function() {
+            var pawn = new Pawn();
+            board.add(pawn);
+            var clonedState = board.clone();
+            console.log(clonedState[0][0]);
+            clonedState[0][0] = undefined;
+            expect(board.pieces()).toBe(1);
+
+            clonedState[0][0] = new Pawn({ col: 2, row: 2});
+            clonedState[0][0] = new Pawn({ col: 2, row: 3});
+            clonedState[0][0] = new Pawn({ col: 2, row: 4});
+
+            expect(board.pieces()).toBe(1);
+
+            board.add(new Pawn({col: 3, row: 7}));
+
+            expect(clonedState[7][3]).not.toBeDefined();
+
+
+        });
     });
 });
