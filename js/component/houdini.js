@@ -6,6 +6,12 @@ define(function (require) {
 		return _.filter(array, function(piece) { return piece.get('name') === name; }).length;
 	}
 
+	var KING_WEIGHT = 200;
+	var QUEEN_WEIGHT = 9;
+	var ROOK_WEIGHT = 5;
+	var BISHOP_WEIGHT = 3;
+	var KNIGHT_WEIGHT = 3;
+	var PAWN_WEIGHT = 1;
 
 	var Houdini = {
 		_kings: function(pieces) {
@@ -26,7 +32,7 @@ define(function (require) {
 		_pawns: function(pieces) {
 			return find(pieces, 'pawn');
 		},
-		evaluate: function(board) {
+		_evaluatePieceScore: function(board) {
 			var score;
 
 			var whitePieces = board.getPiecesForPlayer(1);
@@ -45,8 +51,16 @@ define(function (require) {
 			var P = Houdini._pawns(whitePieces);
 			var p = Houdini._pawns(blackPieces);
 
+			score = KING_WEIGHT*(K-k) 
+				+ QUEEN_WEIGHT*(Q-q)
+				+ ROOK_WEIGHT*(R-r) 
+				+ BISHOP_WEIGHT*(B-b) 
+				+ KNIGHT_WEIGHT*(Kn-kn) 
+				+ PAWN_WEIGHT*(P-p);
 
-
+			return score;
+		},
+		evaluate: function(board) {
 		}
 	};
 
