@@ -9,12 +9,12 @@ define(function (require) {
 
     var DEFAULT = [
 		[new Rook({player: 2, col: 0, row: 0}), 
-		 new Horse({player: 2, col: 1, row: 0}), 
+		 new Knight({player: 2, col: 1, row: 0}), 
 		 new Bishop({player: 2, col: 2, row: 0}), 
 		 new Queen({player: 2, col: 3, row: 0}), 
 		 new King({player: 2}), 
 		 new Bishop({player: 2, col: 5, row: 0}), 
-		 new Horse({player: 2, col: 6, row: 0}), 
+		 new Knight({player: 2, col: 6, row: 0}), 
 		 new Rook({player: 2, col: 7, row: 0})],
 
 		 [new Pawn({player: 2, col: 0, row: 1}), 
@@ -41,12 +41,12 @@ define(function (require) {
 		  new Pawn({player: 1, col: 7, row: 6})],
 
 			 [new Rook({player: 1, col: 0, row: 7}), 
-			  new Horse({player: 1, col: 1, row: 7}), 
+			  new Knight({player: 1, col: 1, row: 7}), 
 			  new Bishop({player: 1, col: 2, row: 7}), 
 			  new Queen({player: 1, col: 3, row: 7}), 
 		  new King({player: 1}), 
 		  new Bishop({player: 1, col: 5, row: 7}), 
-		  new Horse({player: 1, col: 6, row: 7}), 
+		  new Knight({player: 1, col: 6, row: 7}), 
 		  new Rook({player: 1, col: 7, row: 7})]
 		  ];
 
