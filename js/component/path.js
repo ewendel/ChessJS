@@ -15,7 +15,7 @@ define(function (require) {
 				if (path.substr(0,1) === columnNames[i]) {
 					return {
 						col: i,
-						row: path.substr(1,2)
+						row: parseInt(path.substr(1,2), 10)
 					};
 				}
 			}
