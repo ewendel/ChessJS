@@ -31,7 +31,8 @@ var webapp = path.join('js'),
     cssFile = path.join(targetDir, cssFileName);
 
     rjsConfig = path.join(config, 'build.js'),
-    jshintConfig = path.join(config, 'jshint.json');
+    jshintConfig = path.join(config, 'jshint.json'),
+    karmaConfig = path.join('karma.conf.js');
 
 
 /*** TARGETS ********/
@@ -39,7 +40,7 @@ var webapp = path.join('js'),
 target.all = function() {
     // target.check();
     // target.jshint();
-    // target.test();
+    target.test();
     target.build();
 };
 
@@ -54,10 +55,14 @@ target.jshint = function() {
     npmBin('jshint', '--config ' + jshintConfig, files.join(' '));
 };
 
-// target.test = function() {
-//     section('Running JavaScript tests');
-//     npmBin('karma', 'start', 'karma.conf.js', '--browsers PhantomJS', '--single-run');
-// };
+target.test = function() {
+    section('Running JavaScript tests');
+    npmBin('karma', 'start', karmaConfig, '--browsers PhantomJS', '--single-run');
+};
+
+target.wtest = function() {
+    npmBin('karma', 'start', karmaConfig);
+};
 
 target.index = function() {
     buildIndexHtml();
