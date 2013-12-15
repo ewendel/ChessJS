@@ -2,7 +2,7 @@ define(function (require) {
 
 	var View = require('base/view');
     var Game = require('models/game');
-    var Board = require('models/board');
+    var Board = require('component/boardWrapper');
     var Path = require('component/path');
     var eventBus = require('component/events');
 

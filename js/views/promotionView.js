@@ -6,7 +6,7 @@ define(function (require) {
     var Rook = require('models/rook');
     var Horse = require('models/knight');
     var Bishop = require('models/bishop');
-    var Board = require('models/board');
+    var Board = require('component/boardWrapper');
 
 
 	var PromotionView = View.extend({

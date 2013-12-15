@@ -16,7 +16,7 @@ define(function (require) {
     var AIView = require('views/aiView');
 
     var Game = require('models/game');
-    var Board = require('models/board');
+    var Board = require('component/boardWrapper');
 	var Setup = require('models/setup');
     var Queen = require('models/queen');
     var Rook = require('models/rook');

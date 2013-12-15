@@ -1,7 +1,7 @@
 define(function (require) {
 
 	var Piece = require('models/piece');
-    var board = require('models/board');
+    var board = require('component/boardWrapper');
     var eventBus = require('component/events');
     var Path = require('component/path');
 
