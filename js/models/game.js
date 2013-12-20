@@ -3,7 +3,7 @@ define(function (require) {
 	var Model = require('base/model');
 	var Settings = require('component/settings');
     var Path = require('component/path');
-
+    var Houdini = require('component/houdini');
 	var Game = Model.extend({
 		defaults: {
 			turn: 1
@@ -12,15 +12,22 @@ define(function (require) {
 			this.board = options.board;
 		},
 		performCPUMove: function(player) {
-	    	try {
-				if (!player) throw 'performCPUMove needs playerId';
-		    	var moves = this.board.generateMoves(player);
-		    	var move = moves[Math.floor(Math.random()*moves.length)];
-		    	var position = Path.convert(move.position);
-		    	this.performMove(move.piece, position);
-	    	} catch (e) {
-	    		debugger;
-	    	}
+
+			if (!player) throw 'performCPUMove needs playerId';
+	    	var moves = this.board.generateMoves(player);
+	    	var game = this;
+	    	_.each(moves, function(move) {
+	    		var _board = new Board(game.board.clone());
+	    		var _piece = _.clone(move.piece);
+	    		var position = Path.convert(move.position);
+	    		_piece.set({ col: position.col, row: position.row });
+	    		_board.add(_piece);
+	    		console.log(Houdini.evaluate(_board));
+	    	});
+	    	var move = moves[Math.floor(Math.random()*moves.length)];
+	    	var position = Path.convert(move.position);
+	    	this.performMove(move.piece, position);
+
 		},
 		performMove: function(piece, position) {
 			var oldPos = Path.convert(piece.get('col'), piece.get('row'));

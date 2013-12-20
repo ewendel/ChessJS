@@ -70,8 +70,22 @@ define(function(require) {
             board.add(new Pawn({col: 3, row: 7}));
 
             expect(clonedState[7][3]).not.toBeDefined();
+        });
 
+        it('should accept initial state', function() {
+            var piece = new Pawn({col: 0, row: 0, player: 1});
+            var initialState = [[piece, undefined, undefined, undefined, undefined, undefined, undefined, undefined], 
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], 
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], 
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], 
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], 
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], 
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined], 
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]];
 
+            var board = new Board(initialState);
+            expect(board.pieces()).toBe(1);
+            expect(board.get(0,0)).toBe(piece);
         });
     });
 });

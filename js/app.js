@@ -27,6 +27,8 @@ define(function (require) {
 
     return function() {
 
+
+
     	LegacyKiller();
 		new HistoryView({ el: $('.history') });
 		new PromotionView({ el: $('.promotion'), gameArea: $('table') });

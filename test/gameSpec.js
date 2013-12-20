@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var board = require('models/board');
+    var board = require('component/boardWrapper');
     var Game = require('models/game');
     var King = require('models/king');
     var Queen = require('models/queen');
